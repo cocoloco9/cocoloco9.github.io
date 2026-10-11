@@ -9,7 +9,9 @@
   }
   // Never forward arbitrary URLs, child data or tokens to an app store or analytics.
   // The app scheme stays on this device, so the query form is fine there.
-  document.getElementById("open").href = `noted://join/school?token=${token}`;
+  // The same script serves family links (/join/school) and staff invites (/join/staff).
+  const appPath = /^\/join\/staff\/?$/.test(String(window.location.pathname || "")) ? "join/staff" : "join/school";
+  document.getElementById("open").href = `noted://${appPath}?token=${token}`;
   document.getElementById("actions").hidden = false;
   const config = window.NOTED_SCHOOL_LINKS || {};
   let stores = 0;
